@@ -9,7 +9,7 @@ http://localhost:8080
 - Golang
 - PostgreSQL
 
-## Project Setip
+## Project Setup
 
 1. Create a `.env` file in the project root
 
