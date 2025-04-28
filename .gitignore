@@ -1,0 +1,8 @@
+*.exe
+
+*.out
+
+.vscode
+
+*.log
+*.env

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caseworker Tasks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .task-item {
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .completed {
+            background-color: #e8f5e9;
+            text-decoration: line-through;
+        }
+        .button {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 2px;
+            background: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .button-delete { background: #f44336; }
+        form { margin: 20px 0; }
+        input, textarea {
+            display: block;
+            margin: 10px 0;
+            padding: 5px;
+            width: 100%;
+        }
+        .search-form {
+        margin: 20px 0;
+        padding: 10px;
+        background: #f5f5f5;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        }   
+        .search-form form {
+            margin: 0;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-form input[type="number"] {
+            width: 200px;
+            margin: 0;
+        }
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .task-id {
+            font-size: 0.9em;
+            color: #666;
+            background: #eee;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caseworker Tasks</title>
+    <style>
+        /* ...existing styles... */
+    </style>
+</head>
+<body>
+    <h1>Task Manager</h1>
+    <div class="search-form">
+        <form action="/search" method="GET">
+            <input type="number" name="id" placeholder="Search by ID" required>
+            <button type="submit" class="button">Search</button>
+            <a href="/" class="button">Show All</a>
+        </form>
+    </div>
+
+    {{if .error}}
+    <div class="error" style="color: red; margin: 10px 0;">
+        {{.error}}
+    </div>
+    {{end}}
+
+    <form action="/" method="POST">
+        <input type="text" name="title" placeholder="Task Title" required>
+        <textarea name="description" placeholder="Description (optional)"></textarea>
+        <input type="date" name="due_date" required>
+        <button type="submit" class="button">Add Task</button>
+    </form>
+
+    <div class="tasks">
+        {{range .tasks}}
+        <div class="task-item {{if .Completed}}completed{{end}}">
+            <div class="task-header">
+                <h3>{{.Title}}</h3>
+                <span class="task-id">ID: {{.ID}}</span>
+            </div>
+            {{if .Description}}
+            <p>{{.Description}}</p>
+            {{end}}
+            <p>Due: {{.DueDate}}</p>
+            {{if not .Completed}}
+            <a href="/tasks/{{.ID}}/complete" class="button">Complete</a>
+            {{end}}
+            <a href="/tasks/{{.ID}}/delete" class="button button-delete">Delete</a>
+        </div>
+        {{end}}
+    </div>
+</body>
+</html>
